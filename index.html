@@ -145,3 +145,41 @@
             const choices = ['rock', 'paper', 'scissors'];
             const randomIndex = Math.floor(Math.random() * choices.length);
             const computerChoice = choices[randomIndex];
+
+            // Atualiza as escolhas do usuário e computador na tela
+            document.getElementById('userChoice').textContent = `Você escolheu: ${userChoice}`;
+            document.getElementById('computerChoice').textContent = `Computador escolheu: ${computerChoice}`;
+
+            // Determina o vencedor
+            let result = '';
+            if (userChoice === computerChoice) {
+                result = 'Empate!';
+            } else if (
+                (userChoice === 'rock' && computerChoice === 'scissors') ||
+                (userChoice === 'paper' && computerChoice === 'rock') ||
+                (userChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                result = 'Você ganhou!';
+                userScore++;
+            } else {
+                result = 'Você perdeu!';
+                computerScore++;
+            }
+
+            // Atualiza o resultado e o placar
+            document.getElementById('result').textContent = result;
+            document.getElementById('score').textContent = `Você: ${userScore} | Computador: ${computerScore}`;
+        }
+
+        function resetGame() {
+            // Reseta o placar e as escolhas
+            userScore = 0;
+            computerScore = 0;
+            document.getElementById('userChoice').textContent = '';
+            document.getElementById('computerChoice').textContent = '';
+            document.getElementById('result').textContent = '';
+            document.getElementById('score').textContent = `Você: 0 | Computador: 0`;
+        }
+    </script>
+</body>
+</html>
