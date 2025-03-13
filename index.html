@@ -1,161 +1,188 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+    <title>Pedra, Papel, Tesoura</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock, Paper, Scissors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
-            background-color: #fafafa;
-            font-family: 'Arial', sans-serif;
             text-align: center;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #6dd5ed, #2193b0);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        #mainContent {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            height: 100vh;
         }
 
         h1 {
-            color: #333;
-            font-size: 40px;
+            color: #fff;
             margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        p {
-            font-size: 18px;
-            color: #555;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         #choices {
-            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
         }
 
-        button {
-            background-color: #4CAF50;
-            color: white;
+        .choice-btn {
+            background-color: rgba(255, 255, 255, 0.8);
             border: none;
-            padding: 20px 40px;
-            font-size: 18px;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            margin: 10px;
             cursor: pointer;
-            margin: 15px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
         }
 
-        button:hover {
-            background-color: #45a049;
+        .choice-btn:hover {
             transform: scale(1.1);
         }
 
-        button:active {
-            background-color: #388e3c;
+        .choice-btn i {
+            font-size: 60px;
+            color: #3498db;
+            transition: transform 0.2s ease;
+        }
+
+        .choice-btn:hover i {
+            transform: scale(1.1);
+            color: #2980b9;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #gameArea {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #userChoice, #computerChoice {
+            font-size: 18px;
+            margin: 0 20px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         #result {
-            margin-top: 30px;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
-            padding: 15px;
-            border-radius: 12px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            width: 60%;
-            margin: 20px auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .win {
-            color: green;
+        #score {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
-        .lose {
-            color: red;
-        }
-
-        .tie {
-            color: gray;
-        }
-
-        #scoreboard {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin-top: 30px;
-            font-size: 20px;
-        }
-
-        .score {
-            background-color: #ffffff;
+        #resetBtn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
             padding: 10px 20px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #resetBtn:hover {
+            background-color: #c0392b;
         }
     </style>
 </head>
 <body>
-    <h1>Rock, Paper, Scissors</h1>
-    <p>Select your choice:</p>
-
-    <div id="choices">
-        <button onclick="playGame('rock')">Rock</button>
-        <button onclick="playGame('paper')">Paper</button>
-        <button onclick="playGame('scissors')">Scissors</button>
+    <div id="mainContent">
+        <h1>Pedra, Papel, Tesoura</h1>
+        <div id="choices">
+            <button class="choice-btn" onclick="playGame('rock')"><i class="fa-regular fa-hand-back-fist"></i></button>
+            <button class="choice-btn" onclick="playGame('paper')"><i class="fa-regular fa-hand-paper"></i></button>
+            <button class="choice-btn" onclick="playGame('scissors')"><i class="fa-regular fa-hand-scissors"></i></button>
+        </div>
+        <div id="gameArea">
+            <p id="userChoice"></p>
+            <p id="computerChoice"></p>
+        </div>
+        <p id="result"></p>
+        <p id="score">Você: 0 | Computador: 0</p>
+        <button id="resetBtn" onclick="resetGame()">Reiniciar Jogo</button>
     </div>
-
-    <div id="scoreboard">
-        <div class="score">
-            <strong>Wins</strong>
-            <p id="wins">0</p>
-        </div>
-        <div class="score">
-            <strong>Losses</strong>
-            <p id="losses">0</p>
-        </div>
-        <div class="score">
-            <strong>Ties</strong>
-            <p id="ties">0</p>
-        </div>
-    </div>
-
-    <p id="result"></p>
-
     <script>
-        let wins = 0;
-        let losses = 0;
-        let ties = 0;
+        let userScore = 0;
+        let computerScore = 0;
 
         function playGame(userChoice) {
-            var choices = ['rock', 'paper', 'scissors'];
-            var randomIndex = Math.floor(Math.random() * choices.length);
-            var computerChoice = choices[randomIndex];
-            var result = document.getElementById("result");
-            
+            const choices = ['rock', 'paper', 'scissors'];
+            const randomIndex = Math.floor(Math.random() * choices.length);
+            const computerChoice = choices[randomIndex];
+            const resultElement = document.getElementById("result");
+            const userChoiceElement = document.getElementById("userChoice");
+            const computerChoiceElement = document.getElementById("computerChoice");
+            const scoreElement = document.getElementById("score");
+
+            userChoiceElement.textContent = Você escolheu: ${translateChoice(userChoice)};
+            computerChoiceElement.textContent = Computador escolheu: ${translateChoice(computerChoice)};
+
             if (userChoice === computerChoice) {
-                result.textContent = "It's a tie!";
-                result.className = "tie";
-                ties++;
-                document.getElementById("ties").textContent = ties;
+                resultElement.textContent = "Empate!";
             } else if (
                 (userChoice === 'rock' && computerChoice === 'scissors') ||
                 (userChoice === 'paper' && computerChoice === 'rock') ||
                 (userChoice === 'scissors' && computerChoice === 'paper')
             ) {
-                result.textContent = "You win!";
-                result.className = "win";
-                wins++;
-                document.getElementById("wins").textContent = wins;
+                resultElement.textContent = "Você venceu!";
+                userScore++;
             } else {
-                result.textContent = "Computer wins!";
-                result.className = "lose";
-                losses++;
-                document.getElementById("losses").textContent = losses;
+                resultElement.textContent = "Computador venceu!";
+                computerScore++;
             }
+
+            scoreElement.textContent = Você: ${userScore} | Computador: ${computerScore};
+        }
+
+        function translateChoice(choice) {
+            if (choice === 'rock') return 'Pedra';
+            if (choice === 'paper') return 'Papel';
+            return 'Tesoura';
+        }
+
+        function resetGame() {
+            userScore = 0;
+            computerScore = 0;
+            document.getElementById("score").textContent = "Você: 0 | Computador: 0";
+            document.getElementById("result").textContent = "";
+            document.getElementById("userChoice").textContent = "";
+            document.getElementById("computerChoice").textContent = "";
         }
     </script>
 </body>
